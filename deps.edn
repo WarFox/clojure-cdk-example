@@ -1,0 +1,15 @@
+{:paths ["src/"]
+ :deps  {org.clojure/clojure                {:mvn/version "1.11.1"}
+         software.amazon.awscdk/aws-cdk-lib {:mvn/version "2.94.0"}
+         integrant/integrant {:mvn/version "0.8.1"}}
+
+ :aliases
+ {;; clojure -M:synth
+  :synth
+  {:main-opts ["-m" "core"]}
+
+;; clojure -M::test
+  :test
+  {:extra-paths ["tests"]
+   :extra-deps  {lambdaisland/kaocha {:mvn/version "1.86.1355"}}
+   :main-opts   ["-m" "kaocha.runner"]}}}

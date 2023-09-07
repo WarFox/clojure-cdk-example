@@ -1,0 +1,5 @@
+#kaocha/v1
+ {:tests [{:id :default
+           :test-paths ["tests"]}]
+
+  :reporter [kaocha.report/documentation]}
