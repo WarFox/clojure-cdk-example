@@ -20,7 +20,8 @@ subscription for the topic
 
 ** How it works
 
-[Integrant](https://github.com/weavejester/integrant) is the main tool behind this setup.
+[[https://github.com/weavejester/integrant][Integrant]] is the main tool behind this setup, it manages the dependencies
+between resources and stacks, by using a simple configuration map {}
 
 CDK Java depends on =software.amazon.awscdk.App= instance and related
 =software.amazon.awscdk.Stack= instances
@@ -37,9 +38,9 @@ is the configuration used by the integrant system.
                   :stacks [(ig/ref :topic/stack)]}})
 #+end_src
 
-You can add more stacks to the =:stacks= vector in =app/synth=
+You can define more stacks and add them to the =:stacks= vector in =:app/synth=
 
-Refer CDK Java documentation for more https://docs.aws.amazon.com/cdk/v2/guide/work-with-cdk-java.html#java-running
+Refer [[https://docs.aws.amazon.com/cdk/v2/guide/work-with-cdk-java.html#java-running][CDK Java documentation]] for more.
 
 Enjoy!
 
