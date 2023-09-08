@@ -5,11 +5,10 @@
       "**"
     ],
     "exclude": [
-      "README.md",
+      "README.org",
       "cdk*.json",
       "target",
-      "pom.xml",
-      "src/test"
+      "tests"
     ]
   },
   "context": {

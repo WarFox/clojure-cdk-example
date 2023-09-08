@@ -44,6 +44,6 @@ Refer CDK Java documentation for more https://docs.aws.amazon.com/cdk/v2/guide/w
 Enjoy!
 
 ** License
-Copyright © 2023 Warfox
+Copyright © 2023 Deepu Mohan Puthrote
 
 Distributed under the MIT License.
