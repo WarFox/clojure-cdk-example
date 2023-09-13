@@ -12,6 +12,7 @@
                     :stack-id "TopicStack"}
    :stacks/storage {:app      (ig/ref :app/instance)
                     :stack-id "StorageStack"}
+   ;; make sure to add all stacks to :stacks key
    :app/synth      {:app    (ig/ref :app/instance)
                     :stacks [(ig/ref :stacks/topic)
                              (ig/ref :stacks/storage)]}})
@@ -20,10 +21,6 @@
   [_ _]
   (App.))
 
-(defmethod ig/init-key :app/synth
-  [_ {:keys [app]}]
-  (.synth app))
-
 (defmethod ig/init-key :stacks/topic
   [_ {:keys [app stack-id]}]
   (topic/stack app stack-id))
@@ -31,6 +28,10 @@
 (defmethod ig/init-key :stacks/storage
   [_ {:keys [app stack-id]}]
   (storage/stack app stack-id))
+
+(defmethod ig/init-key :app/synth
+  [_ {:keys [app]}]
+  (.synth app))
 
 (defn init
   "Initialise system"
