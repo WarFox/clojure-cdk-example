@@ -6,7 +6,7 @@
    [clojure.test :as t]
    [stacks.topic :as topic]))
 
-(t/deftest stack-test
+(t/deftest topic-stack-test
   (t/testing "stack has 1 queue"
     (let [stack (topic/stack (App.) "test")
           template (Template/fromStack stack)]

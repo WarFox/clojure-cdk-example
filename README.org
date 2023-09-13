@@ -18,6 +18,12 @@ subscription for the topic
  * `cdk diff`        compare deployed stack with current state
  * `cdk docs`        open CDK documentation
 
+** Multi-Stack deployment
+
+ * `cdk deploy StorageStack` deploy the storage stack
+ * `cdk deploy TopicStack`   deploy the topic stack
+ * `cdk deploy --all`        deploy all stacks
+
 ** How it works
 
 [[https://github.com/weavejester/integrant][Integrant]] is the main tool behind this setup, it manages the dependencies
@@ -30,12 +36,15 @@ Integrant  is used to manage the dependencies between them. The following
 is the configuration used by the integrant system.
 
 #+begin_src clojure
-(def config
-  {:app/instance {}
-   :topic/stack  {:app (ig/ref :app/instance)
-                  :id  "TopicStack"}
-   :app/synth    {:app    (ig/ref :app/instance)
-                  :stacks [(ig/ref :topic/stack)]}})
+  (def config
+    {:app/instance   {}
+     :stacks/topic   {:app      (ig/ref :app/instance)
+                      :stack-id "TopicStack"}
+     :stacks/storage {:app      (ig/ref :app/instance)
+                      :stack-id "StorageStack"}
+     :app/synth      {:app    (ig/ref :app/instance)
+                      :stacks [(ig/ref :stacks/topic)
+                               (ig/ref :stacks/storage)]}})
 #+end_src
 
 You can define more stacks and add them to the =:stacks= vector in =:app/synth=

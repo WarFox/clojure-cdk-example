@@ -1,28 +1,37 @@
 (ns system
   (:require
    [integrant.core :as ig]
+   [stacks.storage :as storage]
    [stacks.topic :as topic])
   (:import
    [software.amazon.awscdk App]))
 
 (def config
-  {:app/instance {}
-   :topic/stack  {:app (ig/ref :app/instance)
-                  :id  "TopicStack"}
-   :app/synth    {:app    (ig/ref :app/instance)
-                  :stacks [(ig/ref :topic/stack)]}})
+  {:app/instance   {}
+   :stacks/topic   {:app      (ig/ref :app/instance)
+                    :stack-id "TopicStack"}
+   :stacks/storage {:app      (ig/ref :app/instance)
+                    :stack-id "StorageStack"}
+   ;; make sure to add all stacks to :stacks key
+   :app/synth      {:app    (ig/ref :app/instance)
+                    :stacks [(ig/ref :stacks/topic)
+                             (ig/ref :stacks/storage)]}})
 
 (defmethod ig/init-key :app/instance
   [_ _]
   (App.))
 
+(defmethod ig/init-key :stacks/topic
+  [_ {:keys [app stack-id]}]
+  (topic/stack app stack-id))
+
+(defmethod ig/init-key :stacks/storage
+  [_ {:keys [app stack-id]}]
+  (storage/stack app stack-id))
+
 (defmethod ig/init-key :app/synth
   [_ {:keys [app]}]
   (.synth app))
-
-(defmethod ig/init-key :topic/stack
-  [_ {:keys [app stack-id]}]
-  (topic/stack app stack-id))
 
 (defn init
   "Initialise system"
